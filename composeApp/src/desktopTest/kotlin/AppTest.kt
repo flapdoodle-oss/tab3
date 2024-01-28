@@ -1,35 +1,26 @@
-import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 class AppTest {
   @get:Rule
-  val composeRule = createComposeRule()
+  val rule = createComposeRule()
 
   @Before
   fun beforeEvery() {
-    composeRule.setContent {
+    rule.setContent {
       App()
     }
   }
 
   @Test
   fun `Click changes the text`() {
-    composeRule.onNodeWithText("Click me!").assertExists()
-    composeRule.onNodeWithText("Click me!").performClick()
-//    composeRule.awaitIdle()
-    composeRule.waitForIdle()
-
-//    runBlocking(Dispatchers.Main) {
-//      composeRule.onNodeWithText("Click me!").assertExists()
-//      composeRule.onNodeWithText("Click me!").performClick()
-//      composeRule.awaitIdle()
-////      composeRule.onNodeWithText(FAKE_WELCOME_MSG).assertExists()
-//    }
+    rule.onNodeWithText("Click me!").assertExists()
+    rule.onNodeWithText("Click me!").performClick()
+    rule.waitForIdle()
+    rule.onNodeWithTag("response")
+      .assertExists()
+      .assertTextContains("Compose: Hello, ", substring = true)
   }}
